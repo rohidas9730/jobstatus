@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+    image: rohidas9730/jobstatus-backend:latest
+    build:
+      context: ./backend  # Adjust this if your backend folder is named differently
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - jobstatus-network
+    restart: always
+
+  frontend:
+    image: rohidas9730/jobstatus-frontend:latest
+    build:
+      context: ./frontend  # Adjust this if your frontend folder is named differently
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - jobstatus-network
+    restart: always
+
+networks:
+  jobstatus-network:
+    driver: bridge
