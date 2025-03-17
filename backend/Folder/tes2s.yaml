@@ -1,0 +1,172 @@
+---
+- name: Add router2 to in-memory inventory
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Add router2 to inventory
+      add_host:
+        name: router2
+        ansible_host: 192.168.1.102
+        ansible_user: cisco
+        ansible_password: cisco
+        ansible_network_os: ios
+        ansible_connection: network_cli
+
+- name: Configure Cisco Router R2
+  hosts: router2
+  gather_facts: false
+  tasks:
+    - name: Show CPU Usage
+      debug:
+        msg: "Executing: sh processes cpu sorted | ex 0.00"
+
+    - name: Run CPU Usage Command
+      cisco.ios.ios_command:
+        commands: 
+          - sh processes cpu sorted | ex 0.00
+      register: cpu_output
+
+    - name: Show CPU Usage Output
+      debug:
+        msg: "{{ cpu_output.stdout_lines }}"
+
+    - name: Show AAA Configuration
+      debug:
+        msg: "Executing: sh run | sec aaa"
+
+    - name: Run AAA Command
+      cisco.ios.ios_command:
+        commands: 
+          - sh run | sec aaa
+      register: aaa_output
+
+    - name: Show AAA Output
+      debug:
+        msg: "{{ aaa_output.stdout_lines }}"
+
+    - name: Show TACACS Configuration
+      debug:
+        msg: "Executing: sh run | sec tacacs"
+
+    - name: Run TACACS Command
+      cisco.ios.ios_command:
+        commands: 
+          - sh run | sec tacacs
+      register: tacacs_output
+
+    - name: Show TACACS Output
+      debug:
+        msg: "{{ tacacs_output.stdout_lines }}"
+
+    - name: Show Interface Drops
+      debug:
+        msg: "Executing: sh int | i GigabitEthernet|drop"
+
+    - name: Run Interface Drops Command
+      cisco.ios.ios_command:
+        commands: 
+          - sh int | i GigabitEthernet|drop
+      register: drops_output
+
+    - name: Show Interface Drops Output
+      debug:
+        msg: "{{ drops_output.stdout_lines }}"
+
+    - name: Show CRC Errors
+      debug:
+        msg: "Executing: sh int | i GigabitEthernet|CRC"
+
+    - name: Run CRC Errors Command
+      cisco.ios.ios_command:
+        commands: 
+          - sh int | i GigabitEthernet|CRC
+      register: crc_output
+
+    - name: Show CRC Errors Output
+      debug:
+        msg: "{{ crc_output.stdout_lines }}"
+
+    - name: Show Interface Load
+      debug:
+        msg: "Executing: sh int | i GigabitEthernet|load"
+
+    - name: Run Interface Load Command
+      cisco.ios.ios_command:
+        commands: 
+          - sh int | i GigabitEthernet|load
+      register: load_output
+
+    - name: Show Interface Load Output
+      debug:
+        msg: "{{ load_output.stdout_lines }}"
+
+    - name: Show Spanning-Tree Details
+      debug:
+        msg: "Executing: sh spanning-tree detail | i last"
+
+    - name: Run Spanning-Tree Command
+      cisco.ios.ios_command:
+        commands: 
+          - sh spanning-tree detail | i last
+      register: spanning_output
+
+    - name: Show Spanning-Tree Output
+      debug:
+        msg: "{{ spanning_output.stdout_lines }}"
+
+    - name: Show Device Inventory
+      debug:
+        msg: "Executing: sh inventory"
+
+    - name: Run Inventory Command
+      cisco.ios.ios_command:
+        commands: 
+          - sh inventory
+      register: inventory_output
+
+    - name: Show Inventory Output
+      debug:
+        msg: "{{ inventory_output.stdout_lines }}"
+
+    - name: Show Running Configuration Users
+      debug:
+        msg: "Executing: sh running-config | i username"
+
+    - name: Run User Config Command
+      cisco.ios.ios_command:
+        commands: 
+          - sh running-config | i username
+      register: username_output
+
+    - name: Show User Config Output
+      debug:
+        msg: "{{ username_output.stdout_lines }}"
+
+    - name: Show Router Version
+      debug:
+        msg: "Executing: sh version"
+
+    - name: Run Version Command
+      cisco.ios.ios_command:
+        commands: 
+          - sh version
+      register: version_output
+
+    - name: Show Version Output
+      debug:
+        msg: "{{ version_output.stdout_lines }}"
+
+    - name: Show Logging
+      debug:
+        msg: "Executing: sh logging"
+
+    - name: Run Logging Command
+      cisco.ios.ios_command:
+        commands: 
+          - sh logging
+      register: logging_output
+
+    - name: Show Logging Output
+      debug:
+        msg: "{{ logging_output.stdout_lines }}"
+
