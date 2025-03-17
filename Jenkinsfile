@@ -6,19 +6,10 @@ pipeline
           git branch: 'main', credentialsId: 'git-private-tocken', url: 'https://github.com/rohidas9730/jobstatus.git'
        }
     }
-    stage('build docker image') {
+    stage('build docker image and deploy') {
       steps {
         script {
-          sh "docker build -t backendjob ."
-        }
-      }
-    }
-    stage('Deploy Container') {
-      steps {
-        script {
-          sh "docker stop backendjob || true"
-          sh "docker rm backendjob || true"
-          sh "docker run -d -p 8000:8000 --name backendjob backendjob"
+          sh "docker-compose up --build"
         }
       }
     }
