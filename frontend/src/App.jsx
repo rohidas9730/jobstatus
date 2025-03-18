@@ -11,7 +11,7 @@ const App = () => {
 
   const fetchJobs = async () => {
     try {
-      const response = await axios.get("http://192.168.1.25:8000/");
+      const response = await axios.get("http://192.168.1.2:8000/");
       setJobs(response.data.jobs);
     } catch (error) {
       console.error("Error fetching jobs:", error);
@@ -24,7 +24,7 @@ const App = () => {
 
   const handleRun = async () => {
     try {
-      const response = await fetch("http://192.168.1.25:8000/run-job", {
+      const response = await fetch("http://192.168.1.2:8000/run-job", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
