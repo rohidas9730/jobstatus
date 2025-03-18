@@ -4,9 +4,9 @@ pipeline {
     environment {
         DOCKER_HUB_USERNAME = 'rohidas9730'
         DOCKER_HUB_PASSWORD = 'rohidas@123'
-        DOCKER_IMAGE_BACKEND = 'rohidas9730/quantum:backendjob'
+        DOCKER_IMAGE_BACKEND = 'rohidas9730/quantum:backendjob:latest'
         DOCKER_PS_BACKEND = 'backendjob'
-        DOCKER_IMAGE_FRONTEND = 'rohidas9730/quantum:frontendjob'
+        DOCKER_IMAGE_FRONTEND = 'rohidas9730/quantum:frontendjob:latest'
         DOCKER_PS_FRONTEND = 'frontendjob'
     }
 
