@@ -33,7 +33,7 @@
 //     fetchJobs((prevJobs) => [inProgressJob, ...prevJobs]);
 
 //     try {
-//       const response = await axios.post("http://192.168.1.2:8000"), {
+//       const response = await axios.post("http://192.168.1.2:8000", {
 //         menu: menu,
 //         option_id: optionId,
 //         option_text: optionText,
