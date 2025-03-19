@@ -30,8 +30,8 @@ pipeline {
             steps {
                 script {
                     sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}'
-                    sh 'docker push ${DOCKER_REPO}/${DOCKER_IMAGE_BACKEND}'
-                    sh 'docker push ${DOCKER_REPO}/${DOCKER_IMAGE_FRONTEND}'
+                    sh 'docker push ${DOCKER_HUB_USERNAME}/${DOCKER_REPO}/${DOCKER_IMAGE_BACKEND}'
+                    sh 'docker push ${DOCKER_HUB_USERNAME}/${DOCKER_REPO}/${DOCKER_IMAGE_FRONTEND}'
                 }
             }
         }
