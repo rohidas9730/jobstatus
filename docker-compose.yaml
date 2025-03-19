@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   backend:
+    container_name: backendjob
     image: quantum/backendjob
     build:
       context: ./backend  # Adjust this if your backend folder is named differently
@@ -13,6 +14,7 @@ services:
     restart: always
 
   frontend:
+    container_name: frontendjob
     image: quantum/frontendjob
     build:
       context: ./frontend  # Adjust this if your frontend folder is named differently
