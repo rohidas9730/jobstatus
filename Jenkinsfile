@@ -20,10 +20,6 @@ pipeline {
         stage('Build Docker Image and Deploy') {
             steps {
                 script {
-                    sh 'docker stop ${DOCKER_PS_BACKEND}'
-                    sh 'docker stop ${DOCKER_PS_FRONTEND}'
-                    sh 'docker rm ${DOCKER_PS_BACKEND}'
-                    sh 'docker rm ${DOCKER_PS_FRONTEND}'
                     sh "docker-compose up --build -d"
                 }
             }
