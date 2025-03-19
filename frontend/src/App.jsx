@@ -51,7 +51,7 @@ const App = () => {
   return (
     // <div style={{ padding: "20px", width: "90vw" }}>
     //   <Navbar />
-    //   <h1>Playbook Job Manager</h1>
+    //   <h1>Any Playbook Job Manager</h1>
     //   <DropdownForm fetchJobs={fetchJobs} />
     //   <hr />
     //   <JobTable jobs={jobs} />
