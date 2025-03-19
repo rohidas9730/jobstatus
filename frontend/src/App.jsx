@@ -58,7 +58,7 @@ const App = () => {
     // </div>
 
     <div style={{ padding: "20px", width: "90vw" }}>
-      <h1>Job Management System 'select below files'</h1>
+      <h1>Job Management System by Quantum</h1>
       <DropdownForm fetchJobs={setJobs} />
       <JobTable jobs={jobs} />
     </div>
