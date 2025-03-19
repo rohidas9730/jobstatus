@@ -4,9 +4,9 @@ pipeline {
     environment {
         DOCKER_HUB_USERNAME = 'rohidas9730'
         DOCKER_HUB_PASSWORD = 'rohidas@123'
-        DOCKER_IMAGE_BACKEND = 'backendjob:latest'
+        DOCKER_IMAGE_BACKEND = 'backendjob'
         DOCKER_PS_BACKEND = 'backendjob'
-        DOCKER_IMAGE_FRONTEND = 'frontendjob:latest'
+        DOCKER_IMAGE_FRONTEND = 'frontendjob'
         DOCKER_REPO = 'quantum'
         DOCKER_PS_FRONTEND = 'frontendjob'
     }
@@ -30,8 +30,10 @@ pipeline {
             steps {
                 script {
                     sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}'
-                    sh 'docker push ${DOCKER_HUB_USERNAME}/${DOCKER_REPO}/${DOCKER_IMAGE_BACKEND}'
-                    sh 'docker push ${DOCKER_HUB_USERNAME}/${DOCKER_REPO}/${DOCKER_IMAGE_FRONTEND}'
+                    sh 'docker tag ${DOCKER_IMAGE_BACKEND} ${DOCKER_HUB_USERNAME}/${DOCKER_REPO}:${DOCKER_IMAGE_BACKEND}'
+                    sh 'docker tag ${DOCKER_IMAGE_FRONTEND} ${DOCKER_HUB_USERNAME}/${DOCKER_REPO}:${DOCKER_IMAGE_FRONTEND}'
+                    sh 'docker push ${DOCKER_HUB_USERNAME}/${DOCKER_REPO}:${DOCKER_IMAGE_BACKEND}'
+                    sh 'docker push ${DOCKER_HUB_USERNAME}/${DOCKER_REPO}:${DOCKER_IMAGE_FRONTEND}'
                 }
             }
         }
