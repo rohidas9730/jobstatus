@@ -4,9 +4,9 @@ pipeline {
     environment {
         DOCKER_HUB_USERNAME = 'rohidas9730'
         DOCKER_HUB_PASSWORD = 'rohidas@123'
-        DOCKER_IMAGE_BACKEND = 'rohidas9730/quantum:backendjob:latest'
+        DOCKER_IMAGE_BACKEND = 'quantum/backendjob:latest'
         DOCKER_PS_BACKEND = 'backendjob'
-        DOCKER_IMAGE_FRONTEND = 'rohidas9730/quantum:frontendjob:latest'
+        DOCKER_IMAGE_FRONTEND = 'quantum/frontendjob:latest'
         DOCKER_PS_FRONTEND = 'frontendjob'
     }
 
@@ -28,7 +28,7 @@ pipeline {
         stage('login and push Docker image on DockerHub') {
             steps {
                 script {
-                    sh 'dockerlogin -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}'
+                    sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}'
                     sh 'docker push ${DOCKER_IMAGE_BACKEND}'
                     sh 'docker push ${DOCKER_IMAGE_FRONTEND}'
                 }
@@ -38,7 +38,7 @@ pipeline {
         stage('logout docker hub') {
             steps {
                 script {
-                    sh 'dockerlogout'
+                    sh 'docker logout'
                 }
             }
         }
