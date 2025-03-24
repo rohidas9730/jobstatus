@@ -9,6 +9,8 @@ pipeline {
         DOCKER_IMAGE_FRONTEND = 'frontendjob'
         DOCKER_REPO = 'quantum'
         DOCKER_PS_FRONTEND = 'frontendjob'
+        VULNARABILITY_FILE = 'vulnarabilityfile.txt'
+        EMAIL_ID = 'rohidasmugale@gmail.com'
     }
 
     stages {
@@ -37,7 +39,38 @@ pipeline {
                 }
             }
         }
+        
+        stage('install trivy for scan images') {
+            steps {
+                script {
+                    sh '''
+                    wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb
+                    sudo dpkg -i trivy_0.18.3_Linux-64bit.deb
+                    '''
+                }
+            }
+        }
 
+        stage('scan docker image') {
+            steps {
+                script { 
+                    sh '''
+                    trivy image ${DOCKER_IMAGE_FRONTEND} | tee ${VULNARABILITYFILE}
+                    '''
+                }
+            }
+        }
+
+        stage('vulnarability report send to mail') {
+            steps {
+                script {
+                    sh '''
+                    echo "vulnarabilty report" | mail -s "image scan report" -A ${VULNARABILITYFILE} ${EMAIL_ID}
+                    '''
+                }
+            }
+        }
+        
         stage('logout docker hub') {
             steps {
                 script {
@@ -46,6 +79,7 @@ pipeline {
             }
         }
     }
+    
 
     post {
         success {
