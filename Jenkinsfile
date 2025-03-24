@@ -31,7 +31,7 @@ pipeline {
         stage('login and push Docker image on DockerHub') {
             steps {
                 script {
-                    sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}'
+                    sh 'echo "${DOCKER_HUB_PASSWORD}" | docker login -u ${DOCKER_HUB_USERNAME}" --password-stdin'
                     sh 'docker tag ${DOCKER_IMAGE_BACKEND} ${DOCKER_HUB_USERNAME}/${DOCKER_REPO}:${DOCKER_IMAGE_BACKEND}'
                     sh 'docker tag ${DOCKER_IMAGE_FRONTEND} ${DOCKER_HUB_USERNAME}/${DOCKER_REPO}:${DOCKER_IMAGE_FRONTEND}'
                     sh 'docker push ${DOCKER_HUB_USERNAME}/${DOCKER_REPO}:${DOCKER_IMAGE_BACKEND}'
@@ -44,13 +44,11 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    sudo apt-get install wget apt-transport-https gnupg lsb-release
+                    sudo apt-get install wget apt-transport-https gnupg lsb-release mailutils -y
 wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
 echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
 sudo apt-get update
-sudo apt-get install trivy
-echo "ubuntu" | sudo -S apt-get install wget apt-transport-https gnupg lsb-release -y
-sudo apt-get install -f -y
+sudo apt-get install trivy -y
 
                     '''
                 }
@@ -61,7 +59,7 @@ sudo apt-get install -f -y
             steps {
                 script { 
                     sh '''
-                    trivy image ${DOCKER_IMAGE_FRONTEND} | tee ${VULNARABILITYFILE}
+                    trivy image ${DOCKER_IMAGE_FRONTEND} > ${VULNARABILITY_FILE}
                     '''
                 }
             }
@@ -71,7 +69,7 @@ sudo apt-get install -f -y
             steps {
                 script {
                     sh '''
-                    echo "vulnarabilty report" | mail -s "image scan report" -A ${VULNARABILITYFILE} ${EMAIL_ID}
+                    echo "vulnarabilty report" | mail -s "image scan report" -A ${VULNARABILITY_FILE} ${EMAIL_ID}
                     '''
                 }
             }
